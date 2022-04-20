@@ -1,6 +1,6 @@
 import ExpenseItem from './ExpenseItem';
 
-function Expenses () {
+const Expenses = () => {
     return (
         <div className='expenses'>
             <ExpenseItem date={new Date(2020, 7, 14)} name="Car Insurance" amount="$294.67"/>

@@ -1,25 +1,42 @@
-import { useState } from 'react';
-import ExpenseItem from './ExpenseItem';
-import ExpenseFilter from './ExpenseFilter';
+import { useState } from 'react'
+import ExpenseItem from './ExpenseItem'
+import ExpenseFilter from './ExpenseFilter'
 
-const Expenses = () => {
-    const [selectedFilter, setSelectedFilter] = useState("2022");
+const Expenses = (props) => {
+  const [selectedFilter, setSelectedFilter] = useState('2022')
 
-    const ExpenseFilterHandler = (newYearSelected) => {
-        setSelectedFilter(newYearSelected);
-        console.log(newYearSelected);
-    }
+  const ExpenseFilterHandler = (newYearSelected) => {
+    setSelectedFilter(newYearSelected)
+    console.log(newYearSelected)
+  }
 
-    return (
-        <div className='card'>
-            <ExpenseFilter defaultYear={selectedFilter} onNewYearSelected={ExpenseFilterHandler}/>
-            <div className='expenses'>
-                <ExpenseItem date={new Date(2020, 7, 14)} name="Car Insurance" amount="$294.67"/>
-                <ExpenseItem date={new Date(2020, 7, 14)} name="Life Insurance" amount="$294.67"/>
-                <ExpenseItem date={new Date(2020, 7, 14)} name="Education" amount="$294.67"/>
-            </div>
-        </div>
-    )
+  // Filter Array
+  const filteredExpense = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === selectedFilter
+  })
+
+  let expenseContent = <p className="no-records">No records found.</p>
+
+  if (filteredExpense.length > 0) {
+    expenseContent = filteredExpense.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        name={expense.name}
+        amount={expense.amount}
+        date={expense.date}
+      ></ExpenseItem>
+    ))
+  }
+
+  return (
+    <div className="card">
+      <ExpenseFilter
+        defaultYear={selectedFilter}
+        onNewYearSelected={ExpenseFilterHandler}
+      />
+      <div className="expenses">{expenseContent}</div>
+    </div>
+  )
 }
 
-export default Expenses;
+export default Expenses

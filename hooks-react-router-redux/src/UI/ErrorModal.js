@@ -2,9 +2,11 @@ import React from 'react'
 import Card from './Card'
 import Style from './ErrorModal.module.css'
 import Button from './Button'
-const ErrorModal = (props) => {
+import ReactDOM from 'react-dom'
+
+const Modal = (props) => {
   return (
-    <div>
+    <React.Fragment>
       <div className={Style.backdrop} onClick={props.onCloseModal} />
       <div className={Style.modal}>
         <Card>
@@ -17,7 +19,22 @@ const ErrorModal = (props) => {
           </footer>
         </Card>
       </div>
-    </div>
+    </React.Fragment>
+  )
+}
+
+const ErrorModal = (props) => {
+  return (
+    <React.Fragment>
+      {ReactDOM.createPortal(
+        <Modal
+          onCloseModal={props.onCloseModal}
+          title={props.title}
+          message={props.message}
+        />,
+        document.getElementById('modal-root'),
+      )}
+    </React.Fragment>
   )
 }
 

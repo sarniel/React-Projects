@@ -3,9 +3,9 @@ import Users from './Users/Users'
 
 function App() {
   return (
-    <div>
+    <React.Fragment>
       <Users />
-    </div>
+    </React.Fragment>
   )
 }
 
